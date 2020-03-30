@@ -30,6 +30,27 @@ def getData():
     #content = soup.select('body > pre')
     #print(content)
 
+    for features in jsonContent['features']:
+        for key, value in features.items():
+            #print(value['residence'])
+            #print(value['residence'])
+            value['residence'] = value['residence'].replace(r'�', r'n')
+            value['residence'] = value['residence'].replace(r'ñ', r'n')
+
+    for features in jsonContent3['features']:
+        for key, value in features.items():
+            #print(value['residence'])
+            #print(value['residence'])
+            value['residence'] = value['residence'].replace(r'�', r'n')
+            value['residence'] = value['residence'].replace(r'ñ', r'n')
+
+    for features in jsonContent4['features']:
+        for key, value in features.items():
+            #print(value['residence'])
+            #print(value['residence'])
+            value['facility'] = value['facility'].replace(r'�', r'n')
+            value['facility'] = value['facility'].replace(r'ñ', r'n')
+
     with open('masterList.json', 'w', encoding='utf-8') as jsonOutFile:
         json.dump(jsonContent, jsonOutFile, ensure_ascii=False)
 

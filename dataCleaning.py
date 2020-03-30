@@ -10,7 +10,7 @@ class queryingData:
         if (queryText.lower() == "admin update data"):
             try:
                 dataScrape.getData()
-                return("Data updated successfully")  
+                return("Data updated successfully Boss Rane")  
             except Exception as ex:
                 return(ex)
 
@@ -20,13 +20,15 @@ class queryingData:
                     "\nThe chatbot currently supports the following keywords:\n" \
                         "*INFO - to display information regarding this chatbot\n" \
                             "*PH# - to display the details of the person (ex: PH661)\n"\
-                            "*PLACE\HOSPITAL - to display current cases in a place or hospital (ex: CAGAYAN or CAGAYAN VALLEY MEDICAL CENTER)\n"\
+                            "*PLACE\HOSPITAL - to display current cases in a place or hospital (ex: CAGAYAN or CAGAYAN VALLEY MEDICAL CENTER or CVMC)\n"\
                             "*PUI\n"\
                                 "*PUM\n"\
                                     "*CONFIRMED\n"\
-                                        "*DEAD\n"\
+                                        "*DEATHS\n"\
                                             "*RECOVERED\n"\
-                                                "*TESTS"
+                                                "*TESTS\n"\
+                                                    "You can also try to greet, say thanks, and bid goodbye.\n\n"\
+                                                        "-Rane 2020"
                                                     
 
             return (self.info)
@@ -43,7 +45,7 @@ class queryingData:
             self.response = ["No problem. Let's flatten the curve", "You're welcome. Help flatten the curve!", "You're welcome! Stay indoors!"]
             return (random.choice(self.response))
 
-        elif re.search(r'(pui)', queryText.lower()):#for PUIs
+        elif re.search(r'^(pui)', queryText.lower()):#for PUIs
             with open('statistics.json') as file:
                 self.data = json.load(file)
 
@@ -51,7 +53,7 @@ class queryingData:
                 for key, value in features.items():
                     return("There are currently {} PUIs in the Philippines".format(value['PUIs']))
         
-        elif re.search(r'pum', queryText.lower()):#for PUMs
+        elif re.search(r'^(pum)', queryText.lower()):#for PUMs
             with open('statistics.json') as file:
                 self.data = json.load(file)
 
@@ -59,7 +61,7 @@ class queryingData:
                 for key, value in features.items():
                     return("There are currently {} PUMs in the Philippines".format(value['PUMs']))
 
-        elif re.search(r'(confirmed)|(confirm)|(current)', queryText.lower()):#for confirmed cases
+        elif re.search(r'^(confirmed)|^(confirm)|^(current)', queryText.lower()):#for confirmed cases
             with open('statistics.json') as file:
                 self.data = json.load(file)
 
@@ -77,7 +79,7 @@ class queryingData:
                         return ("{}, {}, {}, resident of {} and admitted at {}".format(value['PH_masterl'], value['kasarian'], value['edad'], value['residence'], value['facility']))
             return("{}'s details are not yet available.".format(queryText.lower()))
 
-        if re.search(r'(recovered)', queryText.lower()):#for recovered
+        if re.search(r'^(recovered)|^(recovery)|^(recover)', queryText.lower()):#for recovered
             with open('statistics.json') as file:
                 self.data = json.load(file)
 
@@ -85,7 +87,7 @@ class queryingData:
                 for key, value in features.items():
                     return("There are currently {} recovered in the Philippines".format(value['recovered']))
 
-        if re.search(r'(deaths)|(dead)', queryText.lower()):#for deaths
+        if re.search(r'^(deaths)|^(dead)|^(die)', queryText.lower()):#for deaths
             with open('statistics.json') as file:
                 self.data = json.load(file)
 
@@ -93,7 +95,7 @@ class queryingData:
                 for key, value in features.items():
                     return("There are currently {} deaths in the Philippines".format(value['deaths']))
 
-        if re.search(r'(pui)', queryText.lower()):#for tests
+        if re.search(r'^(test)|^(tested)|^(tests)', queryText.lower()):#for tests
             with open('statistics.json') as file:
                 self.data = json.load(file)
 
@@ -108,62 +110,52 @@ class queryingData:
             
             with open('locationStats.json') as file:
                 self.data2= json.load(file)
+            
+            
+            # queryInitials = queryText.split()
+            # for word in queryInitials:
+            #     queryInit = queryInit + word[0]
+            # queryInitial = ("".join(queryInit).lower())
+            
+            queryText = queryText.lower()
+            regex = r'' + queryText + r''
 
             for features in self.data2['features']:
                     for key, value in features.items():
-                        queryText = queryText.lower()
-                        regex = r'' + queryText + r''
 
                         if re.search(regex, value['residence'].lower()):
-                            self.response = self.response + ("-{} has {} confirmed cases of CoViD-19\n".format(value['residence'], value['value']))
-                            #return("{} has {} patients with CoViD-19".format(value['facility'], value['count_']))
+                            if (value['value'] == 1):
+                                self.response = self.response + ("-{} has {} confirmed case of CoViD-19\n".format(value['residence'], value['value']))
+                            else:
+                                self.response = self.response + ("-{} has {} confirmed cases of CoViD-19\n".format(value['residence'], value['value']))
 
             for features in self.data['features']:
                     for key, value in features.items():
-                        queryText = queryText.lower()
-                        regex = r'' + queryText + r''
+                        facilityInitials = ""
+                        facilityInit = value['facility'].replace(
+                            "and", " ").replace(
+                                "for", " ").replace(
+                                    "-", " ").replace(
+                                        "of", " ").replace(
+                                            "in", " ").replace(
+                                                "the", " ").split()
+                        for word in facilityInit:
+                            facilityInitials = facilityInitials + word[0]
+                        facilityInitials = ("".join(facilityInitials).lower())
 
-                        if re.search(regex, value['facility'].lower()):
-                            self.response = self.response + ("-{} has {} patients with CoViD-19\n".format(value['facility'], value['count_']))
-                            #return("{} has {} patients with CoViD-19".format(value['facility'], value['count_']))
-
+                        if re.search(regex, value['facility'].lower())  or re.search(r'^' + queryText , facilityInitials):
+                        
+                            if (value['count_'] == 1):
+                                self.response = self.response + ("-{} has {} patient with CoViD-19\n".format(value['facility'], value['count_']))
+                            else:
+                                self.response = self.response + ("-{} has {} patients with CoViD-19\n".format(value['facility'], value['count_']))
+                        
             if (self.response == ""):
                 unknown = ["Sorry, I dont understand.", "I can't comprehend", "Sorry, please check your keywords"]
                 return (random.choice(unknown))
             else:
                 return(self.response)
 
-# for features in self.data['features']:
-#                 for key, value in features.items():
-#                     if (value['PH_masterl'] == queryText.upper()):
-#                         return ("{}, {}, {}, resident of {} and admitted at {}".format(value['PH_masterl'], value['kasarian'], value['edad'], value['residence'], value['facility']))
-        
-
-    # def userQuery(self, queryText):
-
-        
-                
-    #     if re.search(r'PUI', queryText.lower()):
-    #         for features in self.data['features']:
-    #             for key, value in features.items():
-
-    #     else:            
-    #         for features in self.data['features']:
-    #             for key, value in features.items():
-
-    #                 if re.search(r'^ph\d+', queryText.lower()):
-    #                     if (value['PH_masterl'] == queryText):
-    #                         return (value['residence'])
-                    
-    #                 else:
-    #                     unknown = ["Sorry, I dont understand.", "I can't comprehend", "Sorry, please check your keywords"]
-    #                     return(random.choice(unknown))
-                
-
-
-    #             #print(value['FID'])
-    #             # for val2 in value['PH_master1']:
-    #             #     print(val2['PH661'])
-
-# q = queryingData()
-# print(q.loadJson("cagayan"))
+#testing
+q = queryingData()
+print(q.loadJson("rit"))
