@@ -157,5 +157,5 @@ class queryingData:
                 return(self.response)
 
 #testing
-q = queryingData()
-print(q.loadJson("rit"))
+#q = queryingData()
+#print(q.loadJson("admin update data"))
