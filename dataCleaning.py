@@ -51,7 +51,8 @@ class queryingData:
 
             for features in self.data['features']:
                 for key, value in features.items():
-                    return("There are currently {} PUIs in the Philippines".format(value['PUIs']))
+                    #return("There are currently {} PUIs in the Philippines".format(value['PUIs']))
+                    return("Sorry the public API offered by DOH before was taken down by DOH. Thus, the chatbot can't offer updated information anymore.")
         
         elif re.search(r'^(pum)', queryText.lower()):#for PUMs
             with open('statistics.json') as file:
@@ -59,7 +60,8 @@ class queryingData:
 
             for features in self.data['features']:
                 for key, value in features.items():
-                    return("There are currently {} PUMs in the Philippines".format(value['PUMs']))
+                    #return("There are currently {} PUMs in the Philippines".format(value['PUMs']))
+                    return("Sorry the public API offered by DOH before was taken down by DOH. Thus, the chatbot can't offer updated information anymore.")
 
         elif re.search(r'^(confirmed)|^(confirm)|^(current)', queryText.lower()):#for confirmed cases
             with open('statistics.json') as file:
@@ -101,7 +103,9 @@ class queryingData:
 
             for features in self.data['features']:
                 for key, value in features.items():
-                    return("There are currently {} tests conducted in the Philippines".format(value['tests']))
+                    #return("There are currently {} tests conducted in the Philippines".format(value['tests']))
+                    return("Sorry the public API offered by DOH before was taken down by DOH. Thus, the chatbot can't offer updated information anymore.")
+
 
         else: #for facility or place
             self.response = ""
@@ -152,9 +156,13 @@ class queryingData:
                         
             if (self.response == ""):
                 unknown = ["Sorry, I dont understand.", "I can't comprehend", "Sorry, please check your keywords"]
-                return (random.choice(unknown))
+                #return (random.choice(unknown))
+                return("Sorry the public API offered by DOH before was taken down by DOH. Thus, the chatbot can't offer updated information anymore.")
+
             else:
-                return(self.response)
+                #return(self.response)
+                return("Sorry the public API offered by DOH before was taken down by DOH. Thus, the chatbot can't offer updated information anymore.")
+
 
 #testing
 #q = queryingData()

@@ -76,12 +76,12 @@
         {
             "attributes": {
                 "day": 1584144000000,
-                "confirmed": 3094,
-                "PUIs": 1323,
+                "confirmed": 3870,
+                "PUIs": 1441,
                 "PUMs": null,
-                "recovered": 57,
-                "deaths": 144,
-                "tests": 5530,
+                "recovered": 96,
+                "deaths": 182,
+                "tests": 5974,
                 "ObjectId": 1
             }
         }
