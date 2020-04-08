@@ -89,7 +89,7 @@ class queryingData:
                 for key, value in features.items():
                     return("There are currently {} recovered in the Philippines".format(value['recovered']))
 
-        if re.search(r'^(deaths)|^(dead)|^(die)', queryText.lower()):#for deaths
+        if re.search(r'^(death)|^(dead)|^(die)|^(deaths)', queryText.lower()):#for deaths
             with open('statistics.json') as file:
                 self.data = json.load(file)
 
@@ -156,8 +156,8 @@ class queryingData:
                         
             if (self.response == ""):
                 unknown = ["Sorry, I dont understand.", "I can't comprehend", "Sorry, please check your keywords"]
-                #return (random.choice(unknown))
-                return("Sorry the public API offered by DOH before was taken down by DOH. Thus, the chatbot can't offer updated information anymore.")
+                return (random.choice(unknown))
+                #return("Sorry the public API offered by DOH before was taken down by DOH. Thus, the chatbot can't offer updated information anymore.")
 
             else:
                 #return(self.response)
