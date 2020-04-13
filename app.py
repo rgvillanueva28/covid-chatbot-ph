@@ -28,7 +28,7 @@ def receive_message():
                         send_message(recipient_id, response_sent_text)
                     if message['message'].get('attachments'):
                         #print(message['message'].get('attachments'))
-                        response_sent_nontext = "That's not a text I guess?"
+                        response_sent_nontext = ":)"
                         send_message(recipient_id, response_sent_nontext)
     return "Message Processed"
 
