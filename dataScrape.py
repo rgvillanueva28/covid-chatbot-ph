@@ -103,4 +103,4 @@ def getData():
     with open('locationStats.json', 'w', encoding='utf-8') as jsonOutFile:
         json.dump(jsonContent4, jsonOutFile, ensure_ascii=False)
 
-#getData()
+getData()

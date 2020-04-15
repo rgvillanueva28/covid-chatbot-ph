@@ -8,7 +8,6 @@ ___
 DOH does not offer any public API or data that can be scraped as of now. Thus, Data is from https://coronavirus-ph-api.herokuapp.com/ and https://covid19.mathdro.id/. However, it may not be up to date with the newest cases that is not yet updated on the APIs.<br>
 Data is <b>manually</b> updated everyday.<br><br>
 The chatbot currently supports the following keywords:
-The chatbot currently supports the following keywords:
 * INFO - to display information regarding this chatbot
 * PH# - to display the details of the person (ex: PH661)
 * REGION # - to display cases in a region (ex: REGION II (Use Roman Numerals))

@@ -72,13 +72,13 @@ class queryingData:
             with open('statistics.json') as file:
                 self.data = json.load(file)
 
-            return("There are currently {} confirmed cases in the Philippines".format(self.data['recovered']['value']))
+            return("There are currently {} recovered in the Philippines".format(self.data['recovered']['value']))
 
         if re.search(r'^(death)|^(dead)|^(die)|^(deaths)', queryText.lower()):#for deaths
             with open('statistics.json') as file:
                 self.data = json.load(file)
 
-            return("There are currently {} confirmed cases in the Philippines".format(self.data['deaths']['value']))
+            return("There are currently {} deaths cases in the Philippines".format(self.data['deaths']['value']))
 
         if re.search(r'^(test)|^(tested)|^(tests)', queryText.lower()):#for tests
             return("Sorry the public API offered by DOH before was taken down by DOH. Thus, the chatbot can't offer updated information anymore.")
@@ -136,5 +136,5 @@ class queryingData:
 
 
 #testing purposes
-#q = queryingData()
-#print(q.loadJson("info"))
+q = queryingData()
+print(q.loadJson("cagayan"))
