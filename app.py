@@ -3,11 +3,14 @@ from pymessenger.bot import Bot
 import random
 from dataCleaning import queryingData
 import os
+import dataScrape
 
 app = Flask(__name__)
 ACCESS_TOKEN = os.environ['ACCESS_TOKEN']
 VERIFY_TOKEN = os.environ['VERIFY_TOKEN']
 bot = Bot(ACCESS_TOKEN)
+
+dataScrape.getData()
 
 @app.route('/', methods = ['GET', 'POST'])
 

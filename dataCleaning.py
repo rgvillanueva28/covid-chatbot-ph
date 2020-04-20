@@ -4,7 +4,7 @@ import re
 import dataScrape
 
 class queryingData:
-
+    
     def loadJson(self, queryText):
         
         if (queryText.lower() == "admin update data"):
@@ -136,5 +136,5 @@ class queryingData:
 
 
 #testing purposes
-q = queryingData()
-print(q.loadJson("cagayan"))
+#q = queryingData()
+#print(q.loadJson("cagayan"))
