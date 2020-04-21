@@ -13,14 +13,14 @@ def getData():
     website3 = r"https://coronavirus-ph-api.herokuapp.com/total"
     #website4 = r"https://services5.arcgis.com/mnYJ21GiFTR97WFg/arcgis/rest/services/conf_fac_tracking/FeatureServer/0/query?f=json&where=1%3D1&returnGeometry=false&spatialRel=esriSpatialRelIntersects&outFields=*&orderByFields=count_%20desc&resultOffset=0&resultRecordCount=50&cacheHint=true"
 
-    res = requests.get(website, headers, verify=False)
-    res2 = requests.get(website2, headers, verify=False)
+    res = requests.get(website)
+    res2 = requests.get(website2)
     res3 = requests.get(website3)
     #res4 = requests.get(website4, headers, verify=False)
 
     jsonContent = json.loads(res.content.decode())
     jsonContent2 = json.loads(res2.content.decode())
-    jsonContent3 = res3.json()
+    jsonContent3 = json.loads(res3.content.decode())
 
     for case in jsonContent['data']:
         #break
@@ -57,4 +57,4 @@ def getData():
     with open('locationStats.json', 'w', encoding='utf-8') as jsonOutFile:
         json.dump(jsonContent4, jsonOutFile, ensure_ascii=False)
 
-#getData()
+getData()
