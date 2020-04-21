@@ -151,5 +151,5 @@ class queryingData:
 
 
 #testing purposes
-q = queryingData()
-print(q.loadJson("deaths"))
+#q = queryingData()
+#print(q.loadJson("deaths"))
