@@ -69,7 +69,7 @@ class queryingData:
             with open('statistics.json') as file:
                 self.data = json.load(file)
 
-            return("The recovery rate is {} and the fatality rate is {} currently".format(self.data['data']['fatality_rate'],self.data['data']['recovery_rate']))
+            return("The recovery rate is {} and the fatality rate is {} currently".format(self.data['data']['recovery_rate'],self.data['data']['fatality_rate']))
 
         elif re.search(r'^(recovered)|^(recovery)|^(recover)', queryText.lower()):#for recovered
             with open('statistics.json') as file:
