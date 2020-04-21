@@ -43,6 +43,12 @@ class queryingData:
             self.response = ["No problem. Let's flatten the curve", "You're welcome. Help flatten the curve!", "You're welcome! Stay indoors!"]
             return (random.choice(self.response))
 
+        elif re.search(r'^(today)', queryText.lower()):#for cases today
+            with open('statistics.json') as file:
+                self.data = json.load(file)
+
+            return("There are {} new cases, {} new deaths, and {} new recoveries in the Philippines today".format(self.data['data']['cases_today'],self.data['data']['deaths_today'],self.data['data']['recoveries_today']))
+
         elif re.search(r'^(pui)', queryText.lower()):#for PUIs
             return("Sorry the public API offered by DOH before was unavailable. Thus, the chatbot can't offer information on the number of PUIs.")
 
@@ -54,34 +60,40 @@ class queryingData:
             with open('statistics.json') as file:
                 self.data = json.load(file)
 
-            return("There are currently {} confirmed cases in the Philippines".format(self.data['confirmed']['value']))
+            return("There are currently {} confirmed cases in the Philippines".format(self.data['data']['cases']))
+        
+        elif re.search(r'^(test)|^(tested)|^(tests)', queryText.lower()):#for tests
+            return("Sorry the public API offered by DOH before was taken down by DOH. Thus, the chatbot can't offer updated information anymore.")
+
+        elif re.search(r'^(rate)|^(rates)|^(current)', queryText.lower()):#for fatality rate
+            with open('statistics.json') as file:
+                self.data = json.load(file)
+
+            return("The recovery rate is {} and the fatality rate is {} currently".format(self.data['data']['fatality_rate'],self.data['data']['recovery_rate']))
+
+        elif re.search(r'^(recovered)|^(recovery)|^(recover)', queryText.lower()):#for recovered
+            with open('statistics.json') as file:
+                self.data = json.load(file)
+
+            return("There are currently {} recovered in the Philippines".format(self.data['data']['recoveries']))
+
+        elif re.search(r'^(death)|^(dead)|^(die)|^(deaths)', queryText.lower()):#for deaths
+            with open('statistics.json') as file:
+                self.data = json.load(file)
+
+            return("There are currently {} death cases in the Philippines".format(self.data['data']['deaths']))
 
         elif re.search(r'^ph\d+', queryText.lower()): #for PH###
+            FV = "For validation"
             with open('masterList.json') as file:
                 self.data = json.load(file)
 
-            for case in self.data:
+            for case in self.data['data']:
                 if (str(case['case_no']) == queryText.lower()[2:]):
-                    if (case['gender'] == "TBA" and case['age'] == "TBA" and case['resident_of'] == "TBA" and case['hospital_admitted_to'] == "TBA" and case['date'] == "TBA"):
+                    if (case['sex'] == FV and case['age'] == FV and case['residence_in_the_ph'] == FV and case['hospital_admitted_to'] == FV and case['date_of_announcement_to_public'] == FV):
                         return ("{}'s details are not yet available".format(queryText.upper()))
                     else:
-                        return ("{}, {}, {}, from Region {} and admitted at {} on {}".format(queryText.upper(), case['gender'], case['age'], case['resident_of'], case['hospital_admitted_to'], case['date']))
-            return("{}'s details are not yet available.".format(queryText.upper()))
-
-        if re.search(r'^(recovered)|^(recovery)|^(recover)', queryText.lower()):#for recovered
-            with open('statistics.json') as file:
-                self.data = json.load(file)
-
-            return("There are currently {} recovered in the Philippines".format(self.data['recovered']['value']))
-
-        if re.search(r'^(death)|^(dead)|^(die)|^(deaths)', queryText.lower()):#for deaths
-            with open('statistics.json') as file:
-                self.data = json.load(file)
-
-            return("There are currently {} deaths cases in the Philippines".format(self.data['deaths']['value']))
-
-        if re.search(r'^(test)|^(tested)|^(tests)', queryText.lower()):#for tests
-            return("Sorry the public API offered by DOH before was taken down by DOH. Thus, the chatbot can't offer updated information anymore.")
+                        return ("{}, {}, {}, {} nationality from {}, admitted at {}, announced to public on {}, and now with a status of {}".format(queryText.upper(), case['sex'], case['age'], case['nationality'], case['residence_in_the_ph'], case['hospital_admitted_to'], case['date_of_announcement_to_public'], case['health_status']))
 
         else: #for facility or region
             self.response = ""
@@ -91,50 +103,53 @@ class queryingData:
             with open('locationStats.json') as file:
                 self.data2= json.load(file)
             
-            queryText = str(queryText.lower())
+            
+            queryText = queryText.lower()
             regex = r'' + queryText + r''
 
+            for key, value in self.data2.items():
 
-            if (queryText.split()[0].strip().lower() == "region"): #for region
-                region = queryText.split()[1].strip().upper()
-
-                if region in self.data2:#for residence
-                    if (self.data2[region] == 1):
-                        self.response = self.response + ("-{} has {} confirmed case of CoViD-19\n".format(queryText.upper(), self.data2[region]))
+                if re.search(regex, key.lower()):
+                    if (value == 1):
+                        self.response = self.response + ("-{} has {} confirmed case of CoViD-19\n".format(key, value))
                     else:
-                        self.response = self.response + ("-{} has {} confirmed cases of CoViD-19\n".format(queryText.upper(), self.data2[region]))
+                        self.response = self.response + ("-{} has {} confirmed cases of CoViD-19\n".format(key, value))
 
-            for facility in self.data: #for facility
-                facilityInitials = ""
-                facilityInit = facility['facility'].replace(
-                    "and", " ").replace(
-                        "for", " ").replace(
-                            "-", " ").replace(
-                                "of", " ").replace(
-                                    "in", " ").replace(
-                                        "the", " ").split()
-                for word in facilityInit:
-                    facilityInitials = facilityInitials + word[0]
-                facilityInitials = ("".join(facilityInitials).lower())
+            for features in self.data['data']:
+                    facilityInitials = ""
+                    facilityInit = features['facility'].replace(
+                        "and", " ").replace(
+                            "for", " ").replace(
+                                "-", " ").replace(
+                                    "of", " ").replace(
+                                        "in", " ").replace(
+                                            "the", " ").split()
+                    for word in facilityInit:
+                        facilityInitials = facilityInitials + word[0]
+                    facilityInitials = ("".join(facilityInitials).lower())
 
-                if re.search(regex, facility['facility'].lower()):
-                    if (facility['confirmed_cases'] == 1 and facility['puis'] == 1):
-                        self.response = self.response + ("-{} has {} confirmed case and {} PUI of CoViD-19\n".format(facility['facility'].upper(), facility['confirmed_cases'], facility['puis']))
-                    elif (facility['puis'] == 1):
-                        self.response = self.response + ("-{} has {} confirmed cases and {} PUI of CoViD-19\n".format(facility['facility'].upper(), facility['confirmed_cases'], facility['puis']))
-                    elif (facility['confirmed_cases'] == 1):
-                        self.response = self.response + ("-{} has {} confirmed case and {} PUIs of CoViD-19\n".format(facility['facility'].upper(), facility['confirmed_cases'], facility['puis']))
-                    else:
-                        self.response = self.response + ("-{} has {} confirmed cases and {} PUIs of CoViD-19\n".format(facility['facility'].upper(), facility['confirmed_cases'], facility['puis']))
-
+                    if re.search(regex, features['facility'])  or re.search(r'^' + queryText , facilityInitials):
+                    
+                        if (features['confirmed_cases'] <= 1 and features['puis'] <= 1):
+                            self.response = self.response + ("-{} has {} confirmed case and {} PUI.\n".format(features['facility'], features['confirmed_cases'], features['puis']))
+                        elif (features['confirmed_cases'] <= 1 and features['puis'] > 1):
+                            self.response = self.response + ("-{} has {} confirmed case and {} PUIs.\n".format(features['facility'], features['confirmed_cases'], features['puis']))
+                        elif (features['puis'] <= 1 and features['confirmed_cases'] > 1):
+                            self.response = self.response + ("-{} has {} confirmed cases and {} PUI.\n".format(features['facility'], features['confirmed_cases'], features['puis']))
+                        else:
+                            self.response = self.response + ("-{} has {} confirmed cases and {} PUIs.\n".format(features['facility'], features['confirmed_cases'], features['puis']))
+                        
             if (self.response == ""):
                 unknown = ["Sorry, I dont understand.", "I can't comprehend", "Sorry, please check your keywords"]
                 return (random.choice(unknown))
+                #return("Sorry the public API offered by DOH before was taken down by DOH. Thus, the chatbot can't offer updated information anymore.")
 
             else:
                 return(self.response)
+                #return("Sorry the public API offered by DOH before was taken down by DOH. Thus, the chatbot can't offer updated information anymore.")
+
 
 
 #testing purposes
-#q = queryingData()
-#print(q.loadJson("cagayan"))
+q = queryingData()
+print(q.loadJson("deaths"))

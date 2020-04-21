@@ -1,0 +1,15 @@
+{
+    "confirmed": {
+        "value": 6599,
+        "detail": "https://covid19.mathdro.id/api/countries/philippines/confirmed"
+    },
+    "recovered": {
+        "value": 654,
+        "detail": "https://covid19.mathdro.id/api/countries/philippines/recovered"
+    },
+    "deaths": {
+        "value": 437,
+        "detail": "https://covid19.mathdro.id/api/countries/philippines/deaths"
+    },
+    "lastUpdate": "2020-04-21T13:30:32.000Z"
+}

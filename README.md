@@ -1,8 +1,22 @@
-# Covid Chatbot PH v2
+# Covid Chatbot PH v3
 Messenger chatbot for covid-19 cases monitoring. A personal project.<br><br>
 Messenger: https://m.me/104395071206677<br>
 Facebook: https://www.facebook.com/Covid-Tracker-PH-104395071206677
 
+___
+## <b>v3</b>
+API now only from https://coronavirus-ph-api.herokuapp.com/
+<br>Data is now automatically updated every 30 minutes.
+<br><br>The chatbot supports the following keywords:
+* INFO - to display information regarding this chatbot.
+* PH# - to display the details of the person (ex: PH661).
+* Location - to display cases in a location (ex: Cagayan).
+* HOSPITAL - to display current cases  hospital (ex: CAGAYAN VALLEY MEDICAL CENTER or CVMC).
+* CONFIRMED - to display total confirmed cases.
+* DEATHS - to display total deaths.
+* RECOVERED - to display total recoveries.
+* RATES - display recovery and fatality rate.
+* TODAY - display new cases for the day.
 ___
 ## <b>v2</b>
 DOH does not offer any public API or data that can be scraped as of now. Thus, Data is from https://coronavirus-ph-api.herokuapp.com/ and https://covid19.mathdro.id/. However, it may not be up to date with the newest cases that is not yet updated on the APIs.<br>
