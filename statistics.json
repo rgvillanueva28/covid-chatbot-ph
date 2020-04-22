@@ -2,15 +2,15 @@
     "success": true,
     "source": "https://tiny.cc/n8nsmz",
     "data": {
-        "last_update": "2020-04-21",
-        "cases": 6599,
-        "deaths": 437,
-        "recoveries": 654,
-        "cases_today": 140,
+        "last_update": "2020-04-22",
+        "cases": 6710,
+        "deaths": 446,
+        "recoveries": 693,
+        "cases_today": 111,
         "deaths_today": 9,
-        "recoveries_today": 41,
-        "admitted": 5508,
-        "fatality_rate": "6.62%",
-        "recovery_rate": "9.91%"
+        "recoveries_today": 39,
+        "admitted": 5571,
+        "fatality_rate": "6.65%",
+        "recovery_rate": "10.33%"
     }
 }

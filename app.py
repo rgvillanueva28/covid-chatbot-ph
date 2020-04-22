@@ -1,4 +1,5 @@
 from flask import Flask, request
+from flask import render_template
 from pymessenger.bot import Bot
 import random
 from dataCleaning import queryingData
@@ -8,11 +9,14 @@ import dataScrape
 app = Flask(__name__)
 ACCESS_TOKEN = os.environ['ACCESS_TOKEN']
 VERIFY_TOKEN = os.environ['VERIFY_TOKEN']
+
 bot = Bot(ACCESS_TOKEN)
 
+dataScrape.getData()
+
 @app.route('/')
-def homepage():
-    return 'Covid Chatbot PH by Rane'
+def index():
+    return render_template("index.html")
 
 @app.route('/get-data/', methods = ['GET', 'POST'])
 def receive_message():
