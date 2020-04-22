@@ -49,7 +49,7 @@ Data is from https://coronavirus-ph-api.herokuapp.com/. However, it may not be u
             with open('statistics.json') as file:
                 self.data = json.load(file)
 
-            return("There are {} new cases, {} new deaths, and {} new recoveries in the Philippines as of P{}".format(self.data['data']['cases_today'], self.data['data']['deaths_today'], self.data['data']['recoveries_today'], self.data['data']['last_update']))
+            return("There are {} new cases, {} new deaths, and {} new recoveries in the Philippines as of {}".format(self.data['data']['cases_today'], self.data['data']['deaths_today'], self.data['data']['recoveries_today'], self.data['data']['last_update']))
 
         elif re.search(r'^(pui)', queryText.lower()):  # for PUIs
             return("Sorry the public API offered by DOH before was unavailable. Thus, the chatbot can't offer information on the number of PUIs.")
