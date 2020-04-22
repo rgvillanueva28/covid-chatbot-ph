@@ -1,7 +1,8 @@
 # Covid Chatbot PH v3
 Messenger chatbot for covid-19 cases monitoring. A personal project.<br><br>
 Messenger: https://m.me/104395071206677<br>
-Facebook: https://www.facebook.com/Covid-Tracker-PH-104395071206677
+Facebook: https://www.facebook.com/Covid-Tracker-PH-104395071206677<br>
+Heroku: https://covid-chatbot-ph.herokuapp.com/
 
 ___
 ## <b>v3</b>
