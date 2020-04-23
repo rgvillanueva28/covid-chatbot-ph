@@ -45,6 +45,18 @@ Data is from https://coronavirus-ph-api.herokuapp.com/. However, it may not be u
                              "You're welcome. Help flatten the curve!", "You're welcome! Stay indoors!"]
             return (random.choice(self.response))
 
+        elif re.search(r'^(ph)\d+', queryText.lower()):  # for PH###
+            FV = "For validation"
+            with open('masterList.json') as file:
+                self.data = json.load(file)
+
+            for case in self.data['data']:
+                if (str(case['case_no'][2:]).lstrip("0") == queryText[2:].lstrip("0")):
+                    if (case['sex'] == FV and case['age'] == FV and case['residence_in_the_ph'] == FV and case['hospital_admitted_to'] == FV and case['date_of_announcement_to_public'] == FV):
+                        return ("{}'s details are not yet available".format(queryText.upper()))
+                    else:
+                        return ("{}, {}, {}, {} nationality from {}, admitted at {}, announced to public on {}, and now with a status of {}".format(queryText.upper(), case['sex'], case['age'], case['nationality'], case['residence_in_the_ph'], case['hospital_admitted_to'], case['date_of_announcement_to_public'], case['health_status']))
+
         elif re.search(r'^(today)', queryText.lower()):  # for cases today
             with open('statistics.json') as file:
                 self.data = json.load(file)
@@ -83,18 +95,6 @@ Data is from https://coronavirus-ph-api.herokuapp.com/. However, it may not be u
                 self.data = json.load(file)
 
             return("There are currently {} death cases in the Philippines as of ".format(self.data['data']['deaths'], self.data['data']['last_update']))
-
-        elif re.search(r'^ph\d+', queryText.lower()):  # for PH###
-            FV = "For validation"
-            with open('masterList.json') as file:
-                self.data = json.load(file)
-
-            for case in self.data['data']:
-                if (str(case['case_no']) == queryText.lower()[2:]):
-                    if (case['sex'] == FV and case['age'] == FV and case['residence_in_the_ph'] == FV and case['hospital_admitted_to'] == FV and case['date_of_announcement_to_public'] == FV):
-                        return ("{}'s details are not yet available".format(queryText.upper()))
-                    else:
-                        return ("{}, {}, {}, {} nationality from {}, admitted at {}, announced to public on {}, and now with a status of {}".format(queryText.upper(), case['sex'], case['age'], case['nationality'], case['residence_in_the_ph'], case['hospital_admitted_to'], case['date_of_announcement_to_public'], case['health_status']))
 
         else:  # for facility or region
             self.response = ""
@@ -159,4 +159,4 @@ Data is from https://coronavirus-ph-api.herokuapp.com/. However, it may not be u
 # testing purposes
 # if __name__ == '__main__':
 #     q = queryingData()
-#     print(q.loadJson("info"))
+#     print(q.loadJson("confirmed"))
