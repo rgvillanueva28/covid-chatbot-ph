@@ -8,9 +8,9 @@ def getData():
             'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36',
         }
 
-    website = r"https://coronavirus-ph-api.herokuapp.com/cases"
-    website2 = r"https://coronavirus-ph-api.herokuapp.com/facilities"
-    website3 = r"https://coronavirus-ph-api.herokuapp.com/total"
+    website = r"https://coronavirus-ph-api.herokuapp.com/cases/"
+    website2 = r"https://coronavirus-ph-api.herokuapp.com/facilities/"
+    website3 = r"https://coronavirus-ph-api.herokuapp.com/total/"
     #website4 = r"https://services5.arcgis.com/mnYJ21GiFTR97WFg/arcgis/rest/services/conf_fac_tracking/FeatureServer/0/query?f=json&where=1%3D1&returnGeometry=false&spatialRel=esriSpatialRelIntersects&outFields=*&orderByFields=count_%20desc&resultOffset=0&resultRecordCount=50&cacheHint=true"
 
     res = requests.get(website)
