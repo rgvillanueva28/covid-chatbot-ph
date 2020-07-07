@@ -3,7 +3,7 @@ from pymessenger.bot import Bot
 import random
 from dataCleaning import queryingData
 import os
-import dataScrape
+import dataScrape, dataCleaning
 
 app = Flask(__name__)
 ACCESS_TOKEN = os.environ['ACCESS_TOKEN']
@@ -12,10 +12,14 @@ VERIFY_TOKEN = os.environ['VERIFY_TOKEN']
 bot = Bot(ACCESS_TOKEN)
 
 dataScrape.getData()
+cases = dataCleaning.queryingData().cases
+active = dataCleaning.queryingData().active
+deaths = dataCleaning.queryingData().deaths
+recoveries = dataCleaning.queryingData().recovered
 
 @app.route('/')
 def index():
-    return render_template("index.html", confirmed="0", deaths="0", recoveries="0")
+    return render_template("index.html", cases=cases, active=active, deaths=deaths, recoveries=recoveries)
 
 @app.route('/get-data/', methods = ['GET', 'POST'])
 def receive_message():

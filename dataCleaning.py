@@ -118,6 +118,6 @@ Data is from https://disease.sh. However, it may not be up to date with the newe
 
 
 # testing purposes
-if __name__ == '__main__':
-    q = queryingData()
-    print(q.loadJson("admin update data"))
+# if __name__ == '__main__':
+#     q = queryingData()
+#     print(q.loadJson("admin update data"))

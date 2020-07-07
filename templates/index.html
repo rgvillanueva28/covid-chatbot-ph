@@ -22,22 +22,36 @@
       <h1 class="text-center p-3">
         Covid Chatbot PH
       </h1>
-      <div class="row pt-2 text-center mx-auto">
-        <div class="card mx-auto" style="width: 18rem;">
+      <div class="pt-2 text-center mx-auto pb-2 card-deck">
+        <div class="card mx-2">
+          <div
+            class="text-center py-5 mx-0 min-w-full"
+            style="background: rgb(0, 182, 158); color: white;"
+          >
+            <h1 class="text-xl">
+              {{cases}}
+            </h1>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Cases</h5>
+            <!-- <p class="card-text"></p> -->
+          </div>
+        </div>
+        <div class="card mx-2">
           <div
             class="text-center py-5"
             style="background: rgb(70, 70, 255); color: white;"
           >
             <h1 class="text-xl">
-              {{confirmed}}
+              {{active}}
             </h1>
           </div>
           <div class="card-body">
-            <h5 class="card-title">Confirmed</h5>
+            <h5 class="card-title">Active</h5>
             <!-- <p class="card-text"></p> -->
           </div>
         </div>
-        <div class="card mx-auto" style="width: 18rem;">
+        <div class="card mx-2">
           <div
             class="text-center py-5"
             style="background: rgb(255, 36, 36); color: white;"
@@ -51,7 +65,7 @@
             <!-- <p class="card-text"></p> -->
           </div>
         </div>
-        <div class="card mx-auto" style="width: 18rem;">
+        <div class="card mx-2">
           <div
             class="text-center py-5"
             style="background: rgb(0, 226, 49); color: white;"
