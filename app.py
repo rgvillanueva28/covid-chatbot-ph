@@ -58,8 +58,8 @@ def send_message(recipient_id, response):
     return "success"
 
 if __name__ == '__main__':
-    app.config['TEMPLATES_AUTO_RELOAD'] = True
-    app.config['ENV'] = 'development'
-    app.config['DEBUG'] = True
-    app.config['TESTING'] = True
+    # app.config['TEMPLATES_AUTO_RELOAD'] = True
+    # app.config['ENV'] = 'development'
+    # app.config['DEBUG'] = True
+    # app.config['TESTING'] = True
     app.run()
