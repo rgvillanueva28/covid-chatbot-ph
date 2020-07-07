@@ -2,7 +2,6 @@ import json
 import random
 import re
 import dataScrape
-import datetime from datetime
 import pandas as pd
 
 
@@ -15,7 +14,7 @@ class queryingData:
         with open('statistics.json') as file:
             self.data = json.load(file)
 
-        self.dateUpdated = pd.to_datetime(self.data["updated"], unit="ms")[:10]
+        self.dateUpdated = pd.to_datetime(self.data["updated"], unit="ms").strftime("%B %d, %Y")
         self.cases = self.data["cases"]
         self.todayCases = self.data["todayCases"]
         self.deaths = self.data["deaths"]
@@ -45,20 +44,20 @@ class queryingData:
     def loadJson(self, queryText):
 
         if (queryText.lower() == "admin update data"):
-            self.updateData()
+            return self.updateData()
 
         elif (queryText.lower() == "info"):
             self.info = """Hi this chatbot is created to track statistics of the CoViD-19 pandemic in the Philippines.
-Data is from https://coronavirus-ph-api.herokuapp.com/. However, it may not be up to date with the newest cases that is not yet updated on the APIs.
-* INFO - to display information regarding this chatbot.
-* PH# - to display the details of the person (ex: PH661).
-* Location - to display cases in a location (ex: Cagayan).
-* HOSPITAL - to display current cases  hospital (ex: CAGAYAN VALLEY MEDICAL CENTER or CVMC).
-* CONFIRMED - to display total confirmed cases.
+Data is from https://disease.sh. However, it may not be up to date with the newest cases that is not yet updated on the APIs.
+* CASES - to display total cases.
+* ACTIVE - to ddisplay current active cases
 * DEATHS - to display total deaths.
 * RECOVERED - to display total recoveries.
+* CRITICAL - to display critical cases.
+* TESTS - to display number of tests conducted.
 * RATES - display recovery and fatality rate.
 * TODAY - display new cases for the day.
+* PER MILLION - to display statistics per one million.
 """
 
             return (self.info)
@@ -96,7 +95,19 @@ Data is from https://coronavirus-ph-api.herokuapp.com/. However, it may not be u
             return("There are currently {} recovered in the Philippines as of {}".format(self.recovered, self.dateUpdated))
 
         elif re.search(r'^(death)|^(dead)|^(die)|^(deaths)', queryText.lower()):  # for deaths
-            return("There are currently {} death cases in the Philippines as of ".format(self.deaths, self.dateUpdated))
+            return("There are currently {} death cases in the Philippines as of {}".format(self.deaths, self.dateUpdated))
+        
+        elif re.search(r'^(critical)', queryText.lower()):  # for deaths
+            return("There are currently {} critical cases in the Philippines as of {}".format(self.critical, self.dateUpdated))
+        
+        elif re.search(r'^(per million)', queryText.lower()):  # for deaths
+            return("There are\n{} cases per million\n{} deaths per million\n{} recoveries per million\n{} tests per million\nin the Philippines as of {}".format(self.casesPerMil, self.deathsPerMil, self.recoveredPerMil, self.testsPerMil, self.dateUpdated))
+
+    #    self.testsPerMil = self.data["testsPerOneMillion"]
+    #     self.casesPerMil = self.data["casesPerOneMillion"]
+    #     self.deathsPerMil = self.data["deathsPerOneMillion"]
+    #     self.recoveredPerMil = self.data["recoveredPerOneMillion"]
+    #     self.criticalPerMil = self.data["criticalPerOneMillion"]
 
         else:  # for facility or region
             unknown = ["Sorry, I dont understand.",
@@ -109,4 +120,4 @@ Data is from https://coronavirus-ph-api.herokuapp.com/. However, it may not be u
 # testing purposes
 if __name__ == '__main__':
     q = queryingData()
-    print(q.loadJson("confirmed"))
+    print(q.loadJson("admin update data"))
