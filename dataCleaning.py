@@ -29,8 +29,8 @@ class queryingData:
         self.deathsPerMil = self.data["deathsPerOneMillion"]
         self.recoveredPerMil = self.data["recoveredPerOneMillion"]
         self.criticalPerMil = self.data["criticalPerOneMillion"]
-        self.recoveryRate = self.recovered/self.cases
-        self.deathRate = self.deaths/self.cases
+        self.recoveryRate = self.recovered/self.cases*100
+        self.deathRate = self.deaths/self.cases*100
     
     def updateData(self):
         try:
@@ -50,7 +50,7 @@ class queryingData:
             self.info = """Hi this chatbot is created to track statistics of the CoViD-19 pandemic in the Philippines.
 Data is from https://disease.sh. However, it may not be up to date with the newest cases that is not yet updated on the APIs.
 * CASES - to display total cases.
-* ACTIVE - to ddisplay current active cases
+* ACTIVE - to display current active cases
 * DEATHS - to display total deaths.
 * RECOVERED - to display total recoveries.
 * CRITICAL - to display critical cases.
@@ -77,7 +77,7 @@ Data is from https://disease.sh. However, it may not be up to date with the newe
             return (random.choice(self.response))
 
         elif re.search(r'^(today)', queryText.lower()):  # for cases today
-            return("There are {} new cases, {} new deaths, and {} new recoveries in the Philippines as of {}".format(self.cases, self.deaths, self.recovered, self.dateUpdated))
+            return("There are {} new cases,\n{} new deaths, and\n{} new recoveries in the Philippines as of {}".format(self.cases, self.deaths, self.recovered, self.dateUpdated))
 
         elif re.search(r'^(confirmed)|^(confirm)|^(current)|^(case)|^(cases)', queryText.lower()):  # for confirmed cases
             return("There are {} confirmed cases in the Philippines as of {}".format(self.cases, self.dateUpdated))
@@ -89,7 +89,7 @@ Data is from https://disease.sh. However, it may not be up to date with the newe
             return("There are {} tests in the Philippines as of {}".format(self.active, self.dateUpdated))
 
         elif re.search(r'^(rate)|^(rates)', queryText.lower()):  # for fatality rate
-            return("The recovery rate is {} and the fatality rate is {} as of {}".format(self.recoveryRate, self.deathRate, self.dateUpdated))
+            return("The recovery rate is {:.2f} and the fatality rate is {:.2f} as of {}".format(self.recoveryRate, self.deathRate, self.dateUpdated))
 
         elif re.search(r'^(recovered)|^(recovery)|^(recover)', queryText.lower()):  # for recovered
             return("There are currently {} recovered in the Philippines as of {}".format(self.recovered, self.dateUpdated))
@@ -118,6 +118,6 @@ Data is from https://disease.sh. However, it may not be up to date with the newe
 
 
 # testing purposes
-# if __name__ == '__main__':
-#     q = queryingData()
-#     print(q.loadJson("admin update data"))
+if __name__ == '__main__':
+    q = queryingData()
+    print(q.loadJson("rates"))

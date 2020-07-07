@@ -1,4 +1,4 @@
-# Covid Chatbot PH v3
+# Covid Chatbot PH v4
 
 Messenger chatbot for covid-19 cases monitoring. A personal project.<br><br>
 Messenger: https://m.me/104395071206677<br>
@@ -13,12 +13,15 @@ API from https://disease.sh/
 <br>Data is now automatically updated every 30 minutes.
 <br><br>The chatbot supports the following keywords:
 
-- INFO - to display information regarding this chatbot.
-- CONFIRMED - to display total confirmed cases.
+- CASES - to display total cases.
+- ACTIVE - to display current active cases
 - DEATHS - to display total deaths.
 - RECOVERED - to display total recoveries.
+- CRITICAL - to display critical cases.
+- TESTS - to display number of tests conducted.
 - RATES - display recovery and fatality rate.
 - TODAY - display new cases for the day.
+- PER MILLION - to display statistics per one million.
 
 ---
 
