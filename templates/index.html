@@ -1,55 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://img.icons8.com/fluent/48/000000/virus.png"
+    />
+    <script src="https://livejs.com/live.js"></script>
     <title>Covid Chatbot PH</title>
-</head>
-<div class="container-sm pt-5">
+  </head>
+  <div class="container-sm pt-5">
     <div class="jumbotron p-4" role="alert">
-        <h1 class="text-center p-3 ">
-            Covid Chatbot PH
-        </h1>
-        This site does not offer any services.
-        If you want to chat with a bot, you can do so on messenger.
-        Please visit the links below. Thank You.
-        <hr>
-        <a href="https://m.me/104395071206677" class="btn btn-outline-primary btn-lg" role="button">Messenger</a>
-        <a href="https://www.facebook.com/Covid-Tracker-PH-104395071206677" class="btn btn-primary btn-lg"
-            role="button">Facebook</a>
-        <a href="https://github.com/rgvillanueva28/covid-chatbot-ph" class="btn btn-primary btn-lg btn-dark"
-            role="button">Github</a>
-        <hr>
-        
-        The chatbot supports the following keywords:
-        <ul>
-            <li><b>INFO</b> - to display information regarding this chatbot.</li>
-            <li><b>PH#</b> - to display the details of the person (ex: PH661).</li>
-            <li><b>LOCATION</b> - to display cases in a location (ex: Cagayan).</li>
-            <li><b>HOSPITAL</b> - to display current cases hospital (ex: CAGAYAN VALLEY MEDICAL CENTER or CVMC).</li>
-            <li><b>CONFIRMED</b> - to display total confirmed cases.</li>
-            <li><b>DEATHS</b> - to display total deaths.</li>
-            <li><b>RECOVERED</b> - to display total recoveries.</li>
-            <li><b>RATES</b> - display recovery and fatality rate.</li>
-            <li><b>TODAY</b> - display new cases for the day.</li>
-        </ul>
+      <h1 class="text-center p-3">
+        Covid Chatbot PH
+      </h1>
+      <div class="row pt-2 text-center mx-auto">
+        <div class="card mx-auto" style="width: 18rem;">
+          <div
+            class="text-center py-5"
+            style="background: rgb(70, 70, 255); color: white;"
+          >
+            <h1 class="text-xl">
+              {{confirmed}}
+            </h1>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Confirmed</h5>
+            <!-- <p class="card-text"></p> -->
+          </div>
+        </div>
+        <div class="card mx-auto" style="width: 18rem;">
+          <div
+            class="text-center py-5"
+            style="background: rgb(255, 36, 36); color: white;"
+          >
+            <h1 class="text-xl">
+              {{deaths}}
+            </h1>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Deaths</h5>
+            <!-- <p class="card-text"></p> -->
+          </div>
+        </div>
+        <div class="card mx-auto" style="width: 18rem;">
+          <div
+            class="text-center py-5"
+            style="background: rgb(0, 226, 49); color: white;"
+          >
+            <h1 class="text-xl">
+              {{recoveries}}
+            </h1>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Recovery</h5>
+            <!-- <p class="card-text"></p> -->
+          </div>
+        </div>
+      </div>
+      If you want to chat with a bot, you can do so on messenger. Please visit
+      the links below. Thank You.
+      <hr />
+      <a
+        href="https://m.me/104395071206677"
+        class="btn btn-outline-primary btn-lg my-2"
+        role="button"
+        >Messenger</a
+      >
+      <a
+        href="https://www.facebook.com/Covid-Tracker-PH-104395071206677"
+        class="btn btn-primary btn-lg"
+        role="button"
+        >Facebook</a
+      >
+      <a
+        href="https://github.com/rgvillanueva28/covid-chatbot-ph"
+        class="btn btn-primary btn-lg btn-dark"
+        role="button"
+        >Github</a
+      >
+      <hr />
+
+      The chatbot supports the following keywords:
+      <ul>
+        <li><b>INFO</b> - to display information regarding this chatbot.</li>
+        <li><b>PH#</b> - to display the details of the person (ex: PH661).</li>
+        <li><b>LOCATION</b> - to display cases in a location (ex: Cagayan).</li>
+        <li>
+          <b>HOSPITAL</b> - to display current cases hospital (ex: CAGAYAN
+          VALLEY MEDICAL CENTER or CVMC).
+        </li>
+        <li><b>CONFIRMED</b> - to display total confirmed cases.</li>
+        <li><b>DEATHS</b> - to display total deaths.</li>
+        <li><b>RECOVERED</b> - to display total recoveries.</li>
+        <li><b>RATES</b> - display recovery and fatality rate.</li>
+        <li><b>TODAY</b> - display new cases for the day.</li>
+      </ul>
     </div>
-</div>
+  </div>
 
-
-
-<footer class="footer mt-auto py-3">
+  <footer class="footer mt-auto py-3">
     <div class="container">
-        <span class="text-muted ">Created by Rane | 2020</span>
+      <span class="text-muted">Created by Rane | 2020</span>
     </div>
-</footer>
+  </footer>
 
-<body>
-
-</body>
-
+  <body></body>
 </html>

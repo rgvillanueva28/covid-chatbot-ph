@@ -1,5 +1,4 @@
-from flask import Flask, request
-from flask import render_template
+from flask import Flask, request, render_template
 from pymessenger.bot import Bot
 import random
 from dataCleaning import queryingData
@@ -16,7 +15,7 @@ dataScrape.getData()
 
 @app.route('/')
 def index():
-    return render_template("index.html")
+    return render_template("index.html", confirmed="0", deaths="0", recoveries="0")
 
 @app.route('/get-data/', methods = ['GET', 'POST'])
 def receive_message():
@@ -55,4 +54,8 @@ def send_message(recipient_id, response):
     return "success"
 
 if __name__ == '__main__':
+    app.config['TEMPLATES_AUTO_RELOAD'] = True
+    app.config['ENV'] = 'development'
+    app.config['DEBUG'] = True
+    app.config['TESTING'] = True
     app.run()

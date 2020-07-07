@@ -6,14 +6,42 @@ import dataScrape
 
 class queryingData:
 
+    def __init__(self):
+        self.loadStats()
+
+    def loadStats(self):
+        with open('statistics.json') as file:
+            self.data = json.load(file)
+
+        self.dateUpdated = self.data["updated"]
+        self.cases = self.data["cases"]
+        self.todayCases = self.data["todayCases"]
+        self.deaths = self.data["deaths"]
+        self.todayDeaths = self.data["todayDeaths"]
+        self.recovered = self.data["recovered"]
+        self.todayRecovered = self.data["todayRecovered"]
+        self.active = self.data["active""]
+        self.critical = self.data["critical"]
+        self.tests = self.data["tests"]
+        self. testsPerMil = self.data["testsPerOneMillion"]
+        self.casesPerMil = self.data["casesPerOneMillion"]
+        self.deathsPerMil = self.data["deathsPerOneMillion"]
+        self.recoveredPerMil = self.data["recoveredPerOneMillion"]
+        self.criticalPerMil = self.data["criticalPerOneMillion"]
+    
+    def updateData(self):
+        try:
+            dataScrape.getData()
+            self.loadStats()
+            return("Data updated successfully Boss Rane")
+        except Exception as ex:
+            return(ex)
+
+
     def loadJson(self, queryText):
 
         if (queryText.lower() == "admin update data"):
-            try:
-                dataScrape.getData()
-                return("Data updated successfully Boss Rane")
-            except Exception as ex:
-                return(ex)
+            self.updateData()
 
         elif (queryText.lower() == "info"):
             self.info = """Hi this chatbot is created to track statistics of the CoViD-19 pandemic in the Philippines.

@@ -1,0 +1,16 @@
+{
+    "success": true,
+    "source": "https://tiny.cc/n8nsmz",
+    "data": {
+        "last_update": "2020-04-22",
+        "cases": 6710,
+        "deaths": 446,
+        "recoveries": 693,
+        "cases_today": 111,
+        "deaths_today": 9,
+        "recoveries_today": 39,
+        "admitted": 5571,
+        "fatality_rate": "6.65%",
+        "recovery_rate": "10.33%"
+    }
+}
