@@ -2,6 +2,8 @@ import json
 import random
 import re
 import dataScrape
+import datetime from datetime
+import pandas as pd
 
 
 class queryingData:
@@ -13,21 +15,23 @@ class queryingData:
         with open('statistics.json') as file:
             self.data = json.load(file)
 
-        self.dateUpdated = self.data["updated"]
+        self.dateUpdated = pd.to_datetime(self.data["updated"], unit="ms")[:10]
         self.cases = self.data["cases"]
         self.todayCases = self.data["todayCases"]
         self.deaths = self.data["deaths"]
         self.todayDeaths = self.data["todayDeaths"]
         self.recovered = self.data["recovered"]
         self.todayRecovered = self.data["todayRecovered"]
-        self.active = self.data["active""]
+        self.active = self.data["active"]
         self.critical = self.data["critical"]
         self.tests = self.data["tests"]
-        self. testsPerMil = self.data["testsPerOneMillion"]
+        self.testsPerMil = self.data["testsPerOneMillion"]
         self.casesPerMil = self.data["casesPerOneMillion"]
         self.deathsPerMil = self.data["deathsPerOneMillion"]
         self.recoveredPerMil = self.data["recoveredPerOneMillion"]
         self.criticalPerMil = self.data["criticalPerOneMillion"]
+        self.recoveryRate = self.recovered/self.cases
+        self.deathRate = self.deaths/self.cases
     
     def updateData(self):
         try:
@@ -73,118 +77,36 @@ Data is from https://coronavirus-ph-api.herokuapp.com/. However, it may not be u
                              "You're welcome. Help flatten the curve!", "You're welcome! Stay indoors!"]
             return (random.choice(self.response))
 
-        elif re.search(r'^(ph)\d+', queryText.lower()):  # for PH###
-            FV = "For validation"
-            with open('masterList.json') as file:
-                self.data = json.load(file)
-
-            for case in self.data['data']:
-                if (str(case['case_no'][2:]).lstrip("0") == queryText[2:].lstrip("0")):
-                    if (case['sex'] == FV and case['age'] == FV and case['residence_in_the_ph'] == FV and case['hospital_admitted_to'] == FV and case['date_of_announcement_to_public'] == FV):
-                        return ("{}'s details are not yet available".format(queryText.upper()))
-                    else:
-                        return ("{}, {}, {}, {} nationality from {}, admitted at {}, announced to public on {}, and now with a status of {}".format(queryText.upper(), case['sex'], case['age'], case['nationality'], case['residence_in_the_ph'], case['hospital_admitted_to'], case['date_of_announcement_to_public'], case['health_status']))
-
         elif re.search(r'^(today)', queryText.lower()):  # for cases today
-            with open('statistics.json') as file:
-                self.data = json.load(file)
+            return("There are {} new cases, {} new deaths, and {} new recoveries in the Philippines as of {}".format(self.cases, self.deaths, self.recovered, self.dateUpdated))
 
-            return("There are {} new cases, {} new deaths, and {} new recoveries in the Philippines as of {}".format(self.data['data']['cases_today'], self.data['data']['deaths_today'], self.data['data']['recoveries_today'], self.data['data']['last_update']))
+        elif re.search(r'^(confirmed)|^(confirm)|^(current)|^(case)|^(cases)', queryText.lower()):  # for confirmed cases
+            return("There are {} confirmed cases in the Philippines as of {}".format(self.cases, self.dateUpdated))
 
-        elif re.search(r'^(pui)', queryText.lower()):  # for PUIs
-            return("Sorry the public API offered by DOH before was unavailable. Thus, the chatbot can't offer information on the number of PUIs.")
-
-        elif re.search(r'^(pum)', queryText.lower()):  # for PUMs
-            return("Sorry the public API offered by DOH before was unavailable. Thus, the chatbot can't offer information on the number of PUMs.")
-
-        elif re.search(r'^(confirmed)|^(confirm)|^(current)', queryText.lower()):  # for confirmed cases
-            with open('statistics.json') as file:
-                self.data = json.load(file)
-
-            return("There are {} confirmed cases in the Philippines as of {}".format(self.data['data']['cases'], self.data['data']['last_update']))
+        elif re.search(r'^(active)', queryText.lower()):  # for active cases
+            return("There are {} active cases in the Philippines as of {}".format(self.active, self.dateUpdated))
 
         elif re.search(r'^(test)|^(tested)|^(tests)', queryText.lower()):  # for tests
-            return("Sorry the public API offered by DOH before was taken down by DOH. Thus, the chatbot can't offer updated information anymore.")
+            return("There are {} tests in the Philippines as of {}".format(self.active, self.dateUpdated))
 
-        elif re.search(r'^(rate)|^(rates)|^(current)', queryText.lower()):  # for fatality rate
-            with open('statistics.json') as file:
-                self.data = json.load(file)
-
-            return("The recovery rate is {} and the fatality rate is {} as of {}".format(self.data['data']['recovery_rate'], self.data['data']['fatality_rate'], self.data['data']['last_update']))
+        elif re.search(r'^(rate)|^(rates)', queryText.lower()):  # for fatality rate
+            return("The recovery rate is {} and the fatality rate is {} as of {}".format(self.recoveryRate, self.deathRate, self.dateUpdated))
 
         elif re.search(r'^(recovered)|^(recovery)|^(recover)', queryText.lower()):  # for recovered
-            with open('statistics.json') as file:
-                self.data = json.load(file)
-
-            return("There are currently {} recovered in the Philippines as of {}".format(self.data['data']['recoveries'], self.data['data']['last_update']))
+            return("There are currently {} recovered in the Philippines as of {}".format(self.recovered, self.dateUpdated))
 
         elif re.search(r'^(death)|^(dead)|^(die)|^(deaths)', queryText.lower()):  # for deaths
-            with open('statistics.json') as file:
-                self.data = json.load(file)
-
-            return("There are currently {} death cases in the Philippines as of ".format(self.data['data']['deaths'], self.data['data']['last_update']))
+            return("There are currently {} death cases in the Philippines as of ".format(self.deaths, self.dateUpdated))
 
         else:  # for facility or region
-            self.response = ""
-            with open('facilityStats.json') as file:
-                self.data = json.load(file)
-
-            with open('locationStats.json') as file:
-                self.data2 = json.load(file)
-
-            queryText = queryText.lower()
-            regex = r'' + queryText + r''
-
-            for key, value in self.data2.items():
-
-                if re.search(regex, key.lower()):
-                    if (value == 1):
-                        self.response = self.response + \
-                            ("-{} has {} confirmed case of CoViD-19\n".format(key, value))
-                    else:
-                        self.response = self.response + \
-                            ("-{} has {} confirmed cases of CoViD-19\n".format(key, value))
-
-            for features in self.data['data']:
-                facilityInitials = ""
-                facilityInit = features['facility'].replace(
-                    "and", " ").replace(
-                        "for", " ").replace(
-                            "-", " ").replace(
-                                "of", " ").replace(
-                                    "in", " ").replace(
-                                        "the", " ").split()
-                for word in facilityInit:
-                    facilityInitials = facilityInitials + word[0]
-                facilityInitials = ("".join(facilityInitials).lower())
-
-                if re.search(regex, features['facility']) or re.search(r'^' + queryText, facilityInitials):
-
-                    if (features['confirmed_cases'] <= 1 and features['puis'] <= 1):
-                        self.response = self.response + ("-{} has {} confirmed case and {} PUI.\n".format(
-                            features['facility'], features['confirmed_cases'], features['puis']))
-                    elif (features['confirmed_cases'] <= 1 and features['puis'] > 1):
-                        self.response = self.response + ("-{} has {} confirmed case and {} PUIs.\n".format(
-                            features['facility'], features['confirmed_cases'], features['puis']))
-                    elif (features['puis'] <= 1 and features['confirmed_cases'] > 1):
-                        self.response = self.response + ("-{} has {} confirmed cases and {} PUI.\n".format(
-                            features['facility'], features['confirmed_cases'], features['puis']))
-                    else:
-                        self.response = self.response + ("-{} has {} confirmed cases and {} PUIs.\n".format(
-                            features['facility'], features['confirmed_cases'], features['puis']))
-
-            if (self.response == ""):
-                unknown = ["Sorry, I dont understand.",
-                           "I can't comprehend", "Sorry, please check your keywords"]
-                return (random.choice(unknown))
+            unknown = ["Sorry, I dont understand.",
+                        "I can't comprehend", "Sorry, please check your keywords"]
+            return (random.choice(unknown))
                 # return("Sorry the public API offered by DOH before was taken down by DOH. Thus, the chatbot can't offer updated information anymore.")
-
-            else:
-                return(self.response)
                 # return("Sorry the public API offered by DOH before was taken down by DOH. Thus, the chatbot can't offer updated information anymore.")
 
 
 # testing purposes
-# if __name__ == '__main__':
-#     q = queryingData()
-#     print(q.loadJson("confirmed"))
+if __name__ == '__main__':
+    q = queryingData()
+    print(q.loadJson("confirmed"))
