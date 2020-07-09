@@ -13,6 +13,7 @@ API from https://disease.sh/
 <br>Data is now automatically updated every 30 minutes.
 <br><br>The chatbot supports the following keywords:
 
+- INFO - to display information and list of commands.
 - CASES - to display total cases.
 - ACTIVE - to display current active cases
 - DEATHS - to display total deaths.
@@ -21,6 +22,7 @@ API from https://disease.sh/
 - TESTS - to display number of tests conducted.
 - RATES - display recovery and fatality rate.
 - TODAY - display new cases for the day.
+- TOTAL - display the total cases including active, deaths, and recoveries.
 - PER MILLION - to display statistics per one million.
 
 ---
