@@ -16,10 +16,14 @@ cases = dataCleaning.queryingData().cases
 active = dataCleaning.queryingData().active
 deaths = dataCleaning.queryingData().deaths
 recoveries = dataCleaning.queryingData().recovered
+date = dataCleaning.queryingData().dateUpdated
+newCases = dataCleaning.queryingData().todayCases
+newDeaths = dataCleaning.queryingData().todayDeaths
+newRecov = dataCleaning.queryingData().todayRecovered
 
 @app.route('/')
 def index():
-    return render_template("index.html", cases=cases, active=active, deaths=deaths, recoveries=recoveries)
+    return render_template("index.html", cases=cases, active=active, deaths=deaths, recoveries=recoveries, date=date, newCases=newCases, newDeaths=newDeaths, newRecov=newRecov)
 
 @app.route('/get-data/', methods = ['GET', 'POST'])
 def receive_message():
