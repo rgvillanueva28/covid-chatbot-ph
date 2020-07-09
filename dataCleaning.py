@@ -91,7 +91,7 @@ Data is from https://disease.sh. However, it may not be up to date with the newe
             return("There are {} active cases in the Philippines as of {}.".format(self.active, self.dateUpdated))
 
         elif re.search(r'^(test)|^(tested)|^(tests)', queryText.lower()):  # for tests
-            return("There are {} tests in the Philippines as of {}".format(self.active, self.dateUpdated))
+            return("There are {} tests in the Philippines as of {}".format(self.tests, self.dateUpdated))
 
         elif re.search(r'^(rate)|^(rates)', queryText.lower()):  # for fatality rate
             return("The recovery rate is {:.2f} and the fatality rate is {:.2f} as of {}.".format(self.recoveryRate, self.deathRate, self.dateUpdated))
@@ -123,6 +123,6 @@ Data is from https://disease.sh. However, it may not be up to date with the newe
 
 
 # testing purposes
-if __name__ == '__main__':
-    q = queryingData()
-    print(q.loadJson("fresh"))
+# if __name__ == '__main__':
+#     q = queryingData()
+#     print(q.loadJson("fresh"))
