@@ -26,7 +26,7 @@ Data is from https://coronavirus-ph-api.herokuapp.com/. However, it may not be u
 * DEATHS - to display total deaths.
 * RECOVERED - to display total recoveries.
 * RATES - display recovery and fatality rate.
-* TODAY - display new cases for the day.
+* FRESH - display fresh cases.
 """
 
             return (self.info)
@@ -57,7 +57,7 @@ Data is from https://coronavirus-ph-api.herokuapp.com/. However, it may not be u
                     else:
                         return ("{}, {}, {}, {} nationality from {}, admitted at {}, announced to public on {}, and now with a status of {}".format(queryText.upper(), case['sex'], case['age'], case['nationality'], case['residence_in_the_ph'], case['hospital_admitted_to'], case['date_of_announcement_to_public'], case['health_status']))
 
-        elif re.search(r'^(today)', queryText.lower()):  # for cases today
+        elif re.search(r'^(fresh)', queryText.lower()):  # for cases fresh
             with open('statistics.json') as file:
                 self.data = json.load(file)
 

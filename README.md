@@ -21,8 +21,8 @@ API from https://disease.sh/
 - CRITICAL - to display critical cases.
 - TESTS - to display number of tests conducted.
 - RATES - display recovery and fatality rate.
-- TODAY - display new cases for the day.
-- TOTAL - display the total cases including active, deaths, and recoveries.
+- FRESH - display fresh cases.
+- FRESH - display the total cases including active, deaths, and recoveries.
 - PER MILLION - to display statistics per one million.
 
 ---
@@ -41,7 +41,7 @@ API now only from https://coronavirus-ph-api.herokuapp.com/
 - DEATHS - to display total deaths.
 - RECOVERED - to display total recoveries.
 - RATES - display recovery and fatality rate.
-- TODAY - display new cases for the day.
+- FRESH - display fresh cases.
 
 ---
 

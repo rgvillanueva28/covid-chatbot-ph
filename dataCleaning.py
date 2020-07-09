@@ -57,7 +57,7 @@ Data is from https://disease.sh. However, it may not be up to date with the newe
 * CRITICAL - to display critical cases.
 * TESTS - to display number of tests conducted.
 * RATES - display recovery and fatality rate.
-* TODAY - display new cases for the day.
+* FRESH - display fresh cases.
 * TOTAL - display the total cases including active, deaths, and recoveries.
 * PER MILLION - to display statistics per one million.
 """
@@ -81,8 +81,8 @@ Data is from https://disease.sh. However, it may not be up to date with the newe
         elif re.search(r'^(total)', queryText.lower()):  # for total cases
             return("There are {} total cases,\n{} active,\n{} deaths, and\n{} recoveries in the Philippines as of {}.".format(self.cases, self.active, self.deaths, self.recovered, self.dateUpdated))
 
-        elif re.search(r'^(today)', queryText.lower()):  # for cases today
-            return("There are {} new cases,\n{} new deaths, and\n{} new recoveries in the Philippines today, {}.".format(self.todayCases, self.todayDeaths, self.todayRecovered, self.dateUpdated))
+        elif re.search(r'^(fresh)', queryText.lower()):  # for cases fresh
+            return("There are {} new cases,\n{} new deaths, and\n{} new recoveries in the Philippines.".format(self.todayCases, self.todayDeaths, self.todayRecovered, self.dateUpdated))
 
         elif re.search(r'^(confirmed)|^(confirm)|^(current)|^(case)|^(cases)', queryText.lower()):  # for confirmed cases
             return("There are {} confirmed cases in the Philippines as of {}.".format(self.cases, self.dateUpdated))
@@ -123,6 +123,6 @@ Data is from https://disease.sh. However, it may not be up to date with the newe
 
 
 # testing purposes
-# if __name__ == '__main__':
-#     q = queryingData()
-#     print(q.loadJson("total"))
+if __name__ == '__main__':
+    q = queryingData()
+    print(q.loadJson("fresh"))

@@ -9,6 +9,7 @@ def getData():
         }
 
     website = r"https://disease.sh/v3/covid-19/countries/philippines"
+    website2 = r"https://disease.sh/v3/covid-19/countries/philippines?yesterday=true"
     # website2 = r"https://coronavirus-ph-api.herokuapp.com/facilities/"
     # website3 = r"https://coronavirus-ph-api.herokuapp.com/total/"
     #website4 = r"https://services5.arcgis.com/mnYJ21GiFTR97WFg/arcgis/rest/services/conf_fac_tracking/FeatureServer/0/query?f=json&where=1%3D1&returnGeometry=false&spatialRel=esriSpatialRelIntersects&outFields=*&orderByFields=count_%20desc&resultOffset=0&resultRecordCount=50&cacheHint=true"
@@ -43,10 +44,16 @@ def getData():
     # jsonContent4 = jsonContent
     # jsonContent4 = dict(Counter(case['residence_in_the_ph'] for case in jsonContent4['data']))
     #print(counts)
-
-
-    with open('statistics.json', 'w', encoding='utf-8') as jsonOutFile:
-        json.dump(jsonContent, jsonOutFile, ensure_ascii=False)
+    
+    if (jsonContent["todayCases"]==0 and jsonContent["todayDeaths"]==0 and jsonContent["todayRecovered"]==0):
+        res2 = requests.get(website2)
+        jsonContent2 = json.loads(res2.content.decode())
+        with open('statistics.json', 'w', encoding='utf-8') as jsonOutFile:
+            json.dump(jsonContent2, jsonOutFile, ensure_ascii=False)
+    
+    else:
+        with open('statistics.json', 'w', encoding='utf-8') as jsonOutFile:
+            json.dump(jsonContent, jsonOutFile, ensure_ascii=False)
 
     # with open('facilityStats.json', 'w', encoding='utf-8') as jsonOutFile:
     #     json.dump(jsonContent2, jsonOutFile, ensure_ascii=False)
