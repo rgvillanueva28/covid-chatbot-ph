@@ -22,7 +22,7 @@ API from https://disease.sh/
 - TESTS - to display number of tests conducted.
 - RATES - display recovery and fatality rate.
 - FRESH - display fresh cases.
-- FRESH - display the total cases including active, deaths, and recoveries.
+- TOTAL - display the total cases including active, deaths, and recoveries.
 - PER MILLION - to display statistics per one million.
 
 ---
